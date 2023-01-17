@@ -35,16 +35,26 @@ app.put("/api/contacts/:id", (request, response) => {
   const updatedContact = request.body;
 
   // Use map to update contact
-  const updatedContacts = CONTACTS.map((contact) => {
+  CONTACTS.map((contact) => {
     if (contact.id === Number(id)) {
-      console.log("updating");
       return updatedContact;
     }
 
     return contact;
   });
 
-  response.json(updatedContacts);
+  response.json(updatedContact);
+});
+
+app.delete("/api/contacts/:id", (request, response) => {
+  const id2Delete = request.params.id;
+  const updatedContacts = CONTACTS.filter(
+    (contact) => contact.id !== Number(id2Delete)
+  );
+  response.json({
+    message: `Contact deleted successfully with id: ${id2Delete}`,
+    updatedContacts,
+  });
 });
 
 app.post("/api/contacts", (request, response) => {
